@@ -1,0 +1,20 @@
+<phpunit bootstrap="bootstrap.php" backupGlobals="false" colors="true" stopOnFailure="false" verbose="true">
+
+	<testsuite name="OAuth module tests">
+		<directory>tests</directory>
+	</testsuite>
+
+	<filter>
+		<whitelist >
+			<directory suffix=".php">library</directory>
+			<directory suffix=".php">controllers</directory>
+		</whitelist>
+	</filter>
+
+	<logging>
+		<log type="coverage-html"   target="build/coverage" title="Nano Module: OAuth" charset="UTF-8" yui="true" highlight="false" lowUpperBound="55" highLowerBound="80" />
+		<log type="coverage-clover" target="build/logs/clover.xml" />
+		<log type="junit"           target="build/logs/junit.xml" logIncompleteSkipped="false" />
+	</logging>
+
+</phpunit>
