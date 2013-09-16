@@ -8,6 +8,10 @@ if (!class_exists('Nano\Application', false)) {
 	include __DIR__ . '/dependencies/nano/core/library/Application.php';
 }
 
+function app() {
+	return \Nano::app();
+}
+
 $application = \Nano\Application::create()
 	->withConfigurationFormat('php')
 	->withRootDir(__DIR__)

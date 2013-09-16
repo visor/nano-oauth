@@ -1,4 +1,4 @@
-<phpunit bootstrap="bootstrap.php" backupGlobals="false" colors="true" stopOnFailure="false" verbose="true">
+<phpunit bootstrap="tests/bootstrap.php" backupGlobals="false" colors="true" stopOnFailure="false" verbose="true">
 
 	<testsuite name="OAuth module tests">
 		<directory>tests</directory>
