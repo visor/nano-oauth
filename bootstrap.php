@@ -8,11 +8,32 @@ if (!class_exists('Nano\Application', false)) {
 	include __DIR__ . '/dependencies/nano/core/library/Application.php';
 }
 
+/**
+ * @property \Module\Oauth\Facade $oauth
+ */
+class Application extends \Nano\Application {
+
+	/**
+	 * @return \Application
+	 */
+	public function configure() {
+		parent::configure();
+
+		$this->readOnly('oauth', new \Module\Oauth\Facade());
+
+		return $this;
+	}
+
+}
+
+/**
+ * @return \Application
+ */
 function app() {
 	return \Nano::app();
 }
 
-$application = \Nano\Application::create()
+$application = \Application::create()
 	->withConfigurationFormat('php')
 	->withRootDir(__DIR__)
 	->withModule('oauth', __DIR__)
