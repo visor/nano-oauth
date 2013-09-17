@@ -13,6 +13,8 @@ class Index extends Controller {
 	}
 
 	public function callbackAction() {
+		$this->markRendered();
+		echo $this->p('service'), ' ', $_GET['code'];
 	}
 
 	protected function before() {
