@@ -8,7 +8,7 @@ use Nano\Exception;
 
 class Github extends Service {
 
-	const AUTHRIZE_URL     = 'https://github.com/login/oauth/authorize';
+	const AUTHORIZE_URL    = 'https://github.com/login/oauth/authorize';
 	const ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
 	const USER_URL         = 'https://api.github.com/user';
 
@@ -27,7 +27,7 @@ class Github extends Service {
 	}
 
 	public function getAuthoirizeUrl($scope) {
-		return self::AUTHRIZE_URL
+		return self::AUTHORIZE_URL
 			. '?client_id=' . $this->getClientId()
 			. '&scope=' . $this->getScope($scope)
 		;
