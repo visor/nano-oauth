@@ -9,7 +9,8 @@ class Facade {
 
 	public function getServices() {
 		return array(
-			'github' => new Service\Github()
+			'github' => new Service\Github(),
+			'google' => new Service\Google(),
 		);
 	}
 
