@@ -45,7 +45,8 @@ class Github implements Service {
 		throw new \RuntimeException('Scope ' . $id . ' not supported');
 	}
 
-	public function handleCallback(array $params) {
+	public function handleCallback() {
+		echo $this->getName(), ' ', $_GET['code'];
 	}
 
 	protected function getClientId() {

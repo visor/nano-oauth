@@ -6,15 +6,23 @@ use Nano\Controller;
 
 class Index extends Controller {
 
+	/**
+	 * @var \Module\Oauth\Service[]
+	 */
 	public $services;
 
 	public function indexAction() {
-		$this->services = app()->oauth->getServices();
 	}
 
 	public function callbackAction() {
+		$service = $this->p('service');
+		if (!isSet($this->services[$service])) {
+			$this->pageNotFound('Unknown OAuth service');
+		}
+
 		$this->markRendered();
-		echo $this->p('service'), ' ', $_GET['code'];
+		$service = $this->services[$service];
+		$service->handleCallback();
 	}
 
 	protected function before() {
