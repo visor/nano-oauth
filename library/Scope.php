@@ -4,8 +4,8 @@ namespace Module\Oauth;
 
 class Scope {
 
-	const NONE  = '';
-	const USER  = 'user';
-	const EMAIL = 'email';
+	const BASIC  = '';
+	const USER   = 'user';
+	const EMAIL  = 'email';
 
 }
