@@ -12,7 +12,7 @@ class Github extends Service {
 	const ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
 	const USER_URL         = 'https://api.github.com/user';
 
-	private static $scopes = array(
+	protected static $scopes = array(
 		Scope::BASIC    => ''
 		, Scope::USER  => 'user'
 		, Scope::EMAIL => 'user:email'
@@ -55,21 +55,6 @@ class Github extends Service {
 
 	public function getAccessUrl($code) {
 		return self::ACCESS_TOKEN_URL;
-	}
-
-	/**
-	 * Convert module scope name into service scope name (@see \Module\Oauth\Scope)
-	 *
-	 * @return string
-	 * @param string $id
-	 *
-	 * @throws \Exception
-	 */
-	public function getScope($id) {
-		if (isSet(self::$scopes[$id])) {
-			return self::$scopes[$id];
-		}
-		throw new \RuntimeException('Scope ' . $id . ' not supported');
 	}
 
 	protected function getClientId() {
