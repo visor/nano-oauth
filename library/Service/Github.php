@@ -6,7 +6,7 @@ use Module\Oauth\Service;
 use Module\Oauth\Scope;
 use Nano\Exception;
 
-class Github implements Service {
+class Github extends Service {
 
 	const AUTHRIZE_URL     = 'https://github.com/login/oauth/authorize';
 	const ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';

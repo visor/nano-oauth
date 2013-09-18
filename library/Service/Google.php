@@ -6,7 +6,7 @@ use Module\Oauth\Service;
 use Module\Oauth\Scope;
 use Nano\Exception;
 
-class Google implements Service {
+class Google extends Service {
 
 	private static $scopes = array(
 	);
