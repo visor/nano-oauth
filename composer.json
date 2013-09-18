@@ -19,6 +19,9 @@
 		}
 	],
 	"require": {
+		"php": "~5.3.21",
+		"ext-http": "~1.7.4",
+
 		"nano/core": "~0.1"
 	},
 	"require-dev": {
