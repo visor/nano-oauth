@@ -10,6 +10,10 @@ interface Service {
 
 	public function getAccessUrl($code);
 
+	/**
+	 * Should handle authorization callback and return given access tokent
+	 * @return string
+	 */
 	public function handleCallback();
 
 	/**

@@ -20,9 +20,11 @@ class Index extends Controller {
 			$this->pageNotFound('Unknown OAuth service');
 		}
 
-		$this->markRendered();
 		$service = $this->services[$service];
-		$service->handleCallback();
+		$token = $service->handleCallback();
+
+		$this->markRendered();
+		echo $service->getName(), ' ', $token;
 	}
 
 	protected function before() {
