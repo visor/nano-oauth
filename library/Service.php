@@ -13,6 +13,8 @@ abstract class Service {
 
 	abstract public function getName();
 
+	abstract public function getId();
+
 	abstract public function getAuthoirizeUrl($scope);
 
 	abstract public function getAccessUrl($code);
@@ -36,6 +38,24 @@ abstract class Service {
 			return static::$scopes[$id];
 		}
 		throw new \RuntimeException('Scope ' . $id . ' not supported');
+	}
+
+	protected function getClientId() {
+		return $this->getOption('clientId');
+	}
+
+	protected function getClientSecret() {
+		return $this->getOption('clientSecret');
+	}
+
+	protected function getOption($param) {
+		$config = \Nano::app()->config->get('oauth');
+		$id     = $this->getId();
+		$result = $config->$id;
+		if ($result && $result->$param) {
+			return $result->$param;
+		}
+		return null;
 	}
 
 }

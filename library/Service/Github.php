@@ -57,12 +57,4 @@ class Github extends Service {
 		return self::ACCESS_TOKEN_URL;
 	}
 
-	protected function getClientId() {
-		return \Nano::app()->config->get('oauth')->github->clientId;
-	}
-
-	protected function getClientSecret() {
-		return \Nano::app()->config->get('oauth')->github->clientSecret;
-	}
-
 }

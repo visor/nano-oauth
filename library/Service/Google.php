@@ -39,16 +39,8 @@ class Google extends Service {
 	public function getAccessUrl($code) {
 	}
 
-	protected function getClientId() {
-		return \Nano::app()->config->get('oauth')->google->clientId;
-	}
-
-	protected function getClientSecret() {
-		return \Nano::app()->config->get('oauth')->google->clientSecret;
-	}
-
 	protected function getRedirectUri() {
-		return \Nano::app()->config->get('oauth')->google->callback;
+		return $this->getOption('callback');
 	}
 
 }
