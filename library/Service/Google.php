@@ -35,6 +35,23 @@ class Google extends Service {
 	}
 
 	public function handleCallback() {
+		$code = (string)$_GET['code'];
+		$request = new \HttpRequest(self::ACCESS_TOKEN_URL, \HttpRequest::METH_POST);
+		$request->setPostFields(array(
+			'code' => $code,
+			'client_id' => $this->getClientId(),
+			'client_secret' => $this->getClientSecret(),
+			'redirect_uri' => $this->getRedirectUri(),
+			'grant_type' => 'authorization_code',
+		));
+		$response = $request->send();
+		$params   = json_decode($response->getBody());
+
+		if (isSet($params->error)) {
+			throw new Exception($params->error);
+		}
+
+		return $params->access_token;
 	}
 
 	/**
