@@ -13,7 +13,7 @@ class Github extends Service {
 	const USER_URL         = 'https://api.github.com/user';
 
 	protected static $scopes = array(
-		Scope::BASIC    => ''
+		Scope::BASIC   => ''
 		, Scope::USER  => 'user'
 		, Scope::EMAIL => 'user:email'
 	);
