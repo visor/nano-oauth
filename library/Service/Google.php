@@ -28,7 +28,7 @@ class Google extends Service {
 	public function getAuthoirizeUrl($scope) {
 		return self::AUTHORIZE_URL
 			. '?client_id=' . $this->getClientId()
-			. '&redirect_uri=' . $this->getRedirectUri()
+			. '&redirect_uri=' . urlEncode($this->getRedirectUri())
 			. '&response_type=code'
 			. '&scope=' . $this->getScope($scope)
 		;

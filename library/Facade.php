@@ -11,6 +11,7 @@ class Facade {
 		return array(
 			'github' => new Service\Github(),
 			'google' => new Service\Google(),
+			'feedly' => new Service\Feedly(),
 		);
 	}
 
