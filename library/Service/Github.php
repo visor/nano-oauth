@@ -62,7 +62,10 @@ class Github extends Service {
 	 * @throws \Nano\Exception
 	 */
 	public function getUserId($token) {
-		return $token;
+		$request = new \HttpRequest(self::USER_URL . '?access_token=' . $token);
+		$response = $request->send();
+		$result = json_decode($response->getBody());
+		return $result->id;
 	}
 
 }
