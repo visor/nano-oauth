@@ -17,13 +17,19 @@ abstract class Service {
 
 	abstract public function getAuthoirizeUrl($scope);
 
-	abstract public function getAccessUrl($code);
-
 	/**
 	 * Should handle authorization callback and return given access tokent
 	 * @return string
 	 */
 	abstract public function handleCallback();
+
+	/**
+	 * Should return user unique id from oauth service
+	 *
+	 * @return string
+	 * @param string $accessToken
+	 */
+	abstract public function getUserId($accessToken);
 
 	/**
 	 * Convert module scope name into service scope name (@see \Module\Oauth\Scope)

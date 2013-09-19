@@ -8,7 +8,8 @@ use Nano\Exception;
 
 class Google extends Service {
 
-	const AUTHORIZE_URL = 'https://accounts.google.com/o/oauth2/auth';
+	const AUTHORIZE_URL    = 'https://accounts.google.com/o/oauth2/auth';
+	const ACCESS_TOKEN_URL = 'https://accounts.google.com/o/oauth2/token';
 
 	protected static $scopes = array(
 		Scope::BASIC   => 'openid profile'
@@ -36,7 +37,14 @@ class Google extends Service {
 	public function handleCallback() {
 	}
 
-	public function getAccessUrl($code) {
+	/**
+	 * Should return user unique id from oauth service
+	 *
+	 * @return string
+	 * @param string $accessToken
+	 */
+	public function getUserId($accessToken) {
+		return null;
 	}
 
 	protected function getRedirectUri() {

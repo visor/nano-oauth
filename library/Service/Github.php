@@ -35,7 +35,7 @@ class Github extends Service {
 
 	public function handleCallback() {
 		$code = (string)$_GET['code'];
-		$request = new \HttpRequest($this->getAccessUrl($code), \HttpRequest::METH_POST);
+		$request = new \HttpRequest(self::ACCESS_TOKEN_URL, \HttpRequest::METH_POST);
 		$request->setPostFields(array(
 			'client_id' => $this->getClientId(),
 			'client_secret' => $this->getClientSecret(),
@@ -53,8 +53,14 @@ class Github extends Service {
 		return $params['access_token'];
 	}
 
-	public function getAccessUrl($code) {
-		return self::ACCESS_TOKEN_URL;
+	/**
+	 * Should return user unique id from oauth service
+	 *
+	 * @return string
+	 * @param string $accessToken
+	 */
+	public function getUserId($accessToken) {
+		return null;
 	}
 
 }
