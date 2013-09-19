@@ -2,6 +2,8 @@
 
 namespace Module\Oauth;
 
+use Nano\Exception;
+
 abstract class Service {
 
 	/**
@@ -20,6 +22,8 @@ abstract class Service {
 	/**
 	 * Should handle authorization callback and return given access tokent
 	 * @return string
+	 *
+	 * @throws \Nano\Exception
 	 */
 	abstract public function handleCallback();
 
@@ -27,9 +31,11 @@ abstract class Service {
 	 * Should return user unique id from oauth service
 	 *
 	 * @return string
-	 * @param string $accessToken
+	 * @param string $token token returned by {@see handleCallback}
+	 *
+	 * @throws \Nano\Exception
 	 */
-	abstract public function getUserId($accessToken);
+	abstract public function getUserId($token);
 
 	/**
 	 * Convert module scope name into service scope name (@see \Module\Oauth\Scope)
@@ -37,13 +43,13 @@ abstract class Service {
 	 * @return string
 	 * @param string $id
 	 *
-	 * @throws \Exception
+	 * @throws \Nano\Exception
 	 */
 	public function getScope($id) {
 		if (isSet(static::$scopes[$id])) {
 			return static::$scopes[$id];
 		}
-		throw new \RuntimeException('Scope ' . $id . ' not supported');
+		throw new Exception('Scope ' . $id . ' not supported');
 	}
 
 	protected function getClientId() {

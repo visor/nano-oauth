@@ -51,17 +51,25 @@ class Google extends Service {
 			throw new Exception($params->error);
 		}
 
-		return $params->access_token;
+		return $params->id_token;
 	}
 
 	/**
 	 * Should return user unique id from oauth service
 	 *
 	 * @return string
-	 * @param string $accessToken
+	 * @param string $token token returned by {@see handleCallback}
+	 *
+	 * @throws \Nano\Exception
 	 */
-	public function getUserId($accessToken) {
-		return null;
+	public function getUserId($token) {
+		$segments = explode('.', $token);
+		if (3 !== count($segments)) {
+			throw new Exception('Invalid token');
+		}
+
+		$idToken = json_decode(base64_decode($segments[1]));
+		return $idToken->sub;
 	}
 
 	protected function getRedirectUri() {

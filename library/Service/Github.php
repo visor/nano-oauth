@@ -57,10 +57,12 @@ class Github extends Service {
 	 * Should return user unique id from oauth service
 	 *
 	 * @return string
-	 * @param string $accessToken
+	 * @param string $token token returned by {@see handleCallback}
+	 *
+	 * @throws \Nano\Exception
 	 */
-	public function getUserId($accessToken) {
-		return null;
+	public function getUserId($token) {
+		return $token;
 	}
 
 }

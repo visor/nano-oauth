@@ -21,10 +21,11 @@ class Index extends Controller {
 		}
 
 		$service = $this->services[$service];
-		$token = $service->handleCallback();
-
+		$token   = $service->handleCallback();
+		$userId  = $service->getUserId($token);
 		$this->markRendered();
-		echo $service->getName(), ' ', $token;
+
+		echo $service->getName(), ' <code>', $userId, '</code>';
 	}
 
 	protected function before() {
