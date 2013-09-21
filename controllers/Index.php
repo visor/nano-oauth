@@ -2,6 +2,7 @@
 
 namespace Module\Oauth\Controller;
 
+use App\Model\UserOauth;
 use Nano\Controller;
 
 class Index extends Controller {
@@ -22,14 +23,14 @@ class Index extends Controller {
 
 		$service = $this->services[$service];
 		$token   = $service->handleCallback();
-		$userId  = $service->getUserId($token);
+		$user    = \app()->oauth->getInternalUser(UserOauth::mapper(), $service, $token);
 		$this->markRendered();
 
-		echo $service->getName(), ' <code>', $userId, '</code>';
+		echo $service->getName(), ' <code>', var_export($user->getId(), true), '</code> ', $user->getLogin();
 	}
 
 	protected function before() {
-		$this->services = app()->oauth->getServices();
+		$this->services = \app()->oauth->getServices();
 	}
 
 }

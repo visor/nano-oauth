@@ -23,11 +23,11 @@ function create(\PDO $pdo) {
 
 	$pdo->exec('
 		create table user_oauth (
-			userId integer not null,
-			service text,
-			serviceUid text not null,
+			[userId] integer not null,
+			[service] text,
+			[serviceUid] text not null,
 
-			primary key (userId, service)
+			primary key ([userId], [service])
 		)
 	');
 }
