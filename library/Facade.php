@@ -2,6 +2,8 @@
 
 namespace Module\Oauth;
 
+use Module\Manager\UserInterface;
+
 class Facade {
 
 	public function __construct() {
@@ -13,6 +15,16 @@ class Facade {
 			'google' => new Service\Google(),
 			'feedly' => new Service\Feedly(),
 		);
+	}
+
+	/**
+	 * @return UserInterface
+	 * @param Mapper  $mapper
+	 * @param Service $service
+	 * @param         $token
+	 */
+	public function getInternalUser(Mapper $mapper, Service $service, $token) {
+		return $mapper->findServiceUser($service->getId(), $service->getUserId($token));
 	}
 
 }
