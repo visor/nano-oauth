@@ -3,26 +3,34 @@
 
 require __DIR__ . '/bootstrap.php';
 
-$db = __DIR__ . '/database.sqlite';
-if (file_exists($db)) {
-	unLink($db);
+function init($name) {
+	$db = __DIR__ . '/' . $name . '.sqlite';
+	if (file_exists($db)) {
+		unLink($db);
+	}
+	return new \PDO('sqlite:' . $db);
 }
-$pdo = new \PDO('sqlite:' . $db);
-$pdo->exec('
-	create table user (
-		id integer not null primary key,
-		username text,
-		token text,
-		password text default null
-	)
-');
 
-$pdo->exec('
-	create table user_oauth (
-		userId integer not null,
-		service text,
-		serviceUid text not null,
+function create(\PDO $pdo) {
+	$pdo->exec('
+		create table user (
+			id integer not null primary key,
+			username text,
+			token text,
+			password text default null
+		)
+	');
 
-		primary key (userId, service)
-	)
-');
+	$pdo->exec('
+		create table user_oauth (
+			userId integer not null,
+			service text,
+			serviceUid text not null,
+
+			primary key (userId, service)
+		)
+	');
+}
+
+create(init('database'));
+create(init('test-database'));

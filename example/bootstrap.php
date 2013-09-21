@@ -31,6 +31,9 @@ class Application extends \Nano\Application {
 		parent::configure();
 
 		$this->readOnly('oauth', new \Module\Oauth\Facade());
+		if ($this->config->exists('orm')) {
+			\Module\Orm\Factory::configure((array)$this->config->get('orm'));
+		}
 
 		return $this;
 	}
