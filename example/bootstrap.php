@@ -3,9 +3,10 @@
 error_reporting(E_ALL | E_STRICT);
 ini_set('error_log', __DIR__ . '/build/logs/error.log');
 ini_set('display_errors', true);
+define('MODULES', realPath(__DIR__ . '/../dependencies/nano'));
 
 if (!class_exists('Nano\Application', false)) {
-	include __DIR__ . '/dependencies/nano/core/library/Application.php';
+	include MODULES . '/core/library/Application.php';
 }
 
 /**
@@ -18,11 +19,11 @@ class Application extends \Nano\Application {
 
 		$this
 			->withConfigurationFormat('php')
-			->withRootDir(__DIR__)
-			->withModule('common', __DIR__)
-			->withModule('orm', __DIR__)
-			->withModule('manager', __DIR__)
-			->withModule('oauth', __DIR__)
+			->withRootDir(__DIR__ . '')
+			->withModule('common', MODULES . '/common')
+			->withModule('orm', MODULES . '/orm')
+			->withModule('manager', MODULES . '/manager')
+			->withModule('oauth', __DIR__ . '/..')
 		;
 	}
 

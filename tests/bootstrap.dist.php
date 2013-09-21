@@ -9,6 +9,6 @@ $config = (object)array(
 	),
 );
 
-include __DIR__ . '/../bootstrap.php';
+include __DIR__ . '/../example/bootstrap.php';
 
 app()->config->set('oauth', $config);
