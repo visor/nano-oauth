@@ -13,9 +13,19 @@ if (!class_exists('Nano\Application', false)) {
  */
 class Application extends \Nano\Application {
 
-	/**
-	 * @return \Application
-	 */
+	public function __construct() {
+		parent::__construct();
+
+		$this
+			->withConfigurationFormat('php')
+			->withRootDir(__DIR__)
+			->withModule('common', __DIR__)
+			->withModule('orm', __DIR__)
+			->withModule('manager', __DIR__)
+			->withModule('oauth', __DIR__)
+		;
+	}
+
 	public function configure() {
 		parent::configure();
 
@@ -33,9 +43,4 @@ function app() {
 	return \Nano::app();
 }
 
-$application = \Application::create()
-	->withConfigurationFormat('php')
-	->withRootDir(__DIR__)
-	->withModule('oauth', __DIR__)
-	->configure()
-;
+\Application::create()->configure();

@@ -19,10 +19,11 @@
 		}
 	],
 	"require": {
-		"php": "~5.3.21",
+		"php": ">5.3.21",
 		"ext-http": "~1.7.4",
 
-		"nano/core": "~0.1"
+		"nano/core": "~0.1",
+		"nano/manager": "~0.2"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*"
