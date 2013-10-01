@@ -13,10 +13,20 @@ abstract class Service {
 	 */
 	protected static $scopes = array();
 
+	/**
+	 * @return string
+	 */
 	abstract public function getName();
 
+	/**
+	 * @return string
+	 */
 	abstract public function getId();
 
+	/**
+	 * @return string
+	 * @param $scope
+	 */
 	abstract public function getAuthoirizeUrl($scope);
 
 	/**
@@ -28,28 +38,28 @@ abstract class Service {
 	abstract public function handleCallback();
 
 	/**
-	 * Should return user unique id from oauth service
+	 * Should return user data parsed from oauth service
 	 *
-	 * @return string
+	 * @return \Module\Oauth\UserData
 	 * @param string $token token returned by {@see handleCallback}
 	 *
 	 * @throws \Nano\Exception
 	 */
-	abstract public function getUserId($token);
+	abstract public function getUserData($token);
 
 	/**
 	 * Convert module scope name into service scope name (@see \Module\Oauth\Scope)
 	 *
 	 * @return string
-	 * @param string $id
+	 * @param string $name
 	 *
 	 * @throws \Nano\Exception
 	 */
-	public function getScope($id) {
-		if (isSet(static::$scopes[$id])) {
-			return static::$scopes[$id];
+	public function getScope($name) {
+		if (isSet(static::$scopes[$name])) {
+			return static::$scopes[$name];
 		}
-		throw new Exception('Scope ' . $id . ' not supported');
+		throw new Exception('Scope ' . $name . ' not supported');
 	}
 
 	protected function getClientId() {
@@ -61,9 +71,9 @@ abstract class Service {
 	}
 
 	protected function getOption($param) {
-		$config = \Nano::app()->config->get('oauth');
-		$id     = $this->getId();
-		$result = $config->$id;
+		$config  = \Nano::app()->config->get('oauth');
+		$service = $this->getId();
+		$result  = $config->$service;
 		if ($result && $result->$param) {
 			return $result->$param;
 		}

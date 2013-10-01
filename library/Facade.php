@@ -24,7 +24,7 @@ class Facade {
 	 * @param         $token
 	 */
 	public function getInternalUser(Mapper $mapper, Service $service, $token) {
-		return $mapper->findServiceUser($service->getId(), $service->getUserId($token));
+		return $mapper->findServiceUser($service->getId(), $service->getUserData($token));
 	}
 
 }

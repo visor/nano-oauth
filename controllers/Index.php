@@ -24,9 +24,16 @@ class Index extends Controller {
 		$service = $this->services[$service];
 		$token   = $service->handleCallback();
 		$user    = \app()->oauth->getInternalUser(UserOauth::mapper(), $service, $token);
-		$this->markRendered();
 
-		echo $service->getName(), ' <code>', var_export($user->getId(), true), '</code> ', $user->getLogin();
+		$this->markRendered();
+		echo $service->getName(),
+			'<pre>',
+				'id:    ', $user->getId(), PHP_EOL,
+				'login: ', $user->getLogin(), PHP_EOL,
+				'email: ', $user->getEmail(), PHP_EOL,
+				'name:  ', $user->getUserName(), PHP_EOL,
+			'</pre> '
+		;
 	}
 
 	protected function before() {

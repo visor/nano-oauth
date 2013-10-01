@@ -3,6 +3,7 @@
 namespace App\Model\Mapper;
 
 use App\Model\User;
+use Module\Oauth\UserData;
 use Module\Orm\Factory;
 use Module\Orm\Mapper;
 
@@ -12,29 +13,48 @@ class UserOauth extends Mapper implements \Module\Oauth\Mapper {
 
 	/**
 	 * @return \Module\Manager\Guest;
-	 * @param string $service    Internal service id
-	 * @param string $serviceUid User ID provided by service
+	 * @param string $service         Internal service id
+	 * @param \Module\Oauth\UserData  User data provided by service
 	 */
-	public function findServiceUser($service, $serviceUid) {
+	public function findServiceUser($service, UserData $userData) {
+		$result = $this->findByUid($service, $userData->getUid());
+		if ($result instanceof User) {
+			return $result;
+		}
+		if ($userData->getEmail()) {
+			$result = User::mapper()->findByEmail($userData->getEmail());
+			if ($result instanceof User) {
+				$this->associateWithService($result, $userData, $service);
+				return $result;
+			}
+		}
+
+		$result = User::createFromUserData($userData);
+		$result->save();
+		$this->associateWithService($result, $userData, $service);
+
+		return $result;
+	}
+
+	protected function findByUid($service, $uid) {
 		$criteria = Factory::criteria()
 			->equals('service', $service)
-			->and->equals('serviceUid', $serviceUid)
+			->and->equals('serviceUid', $uid)
 		;
 		$found = $this->dataSource()->get($this->getResource(), $criteria);
 		if ($found) {
 			return User::mapper()->get($found['userId']);
 		}
 
-		$result = new User();
-		$result->username = 'Created for ' . $service . ' ' . $serviceUid;
+		return null;
+	}
+
+	protected function associateWithService(User $user, UserData $userData, $service) {
+		$result = new \App\Model\UserOauth();
+		$result->userId     = $user->getId();
+		$result->service    = $service;
+		$result->serviceUid = $userData->getUid();
 		$result->save();
-
-		$map = new \App\Model\UserOauth();
-		$map->userId     = $result->id;
-		$map->service    = $service;
-		$map->serviceUid = $serviceUid;
-		$map->save();
-
 		return $result;
 	}
 

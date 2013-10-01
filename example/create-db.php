@@ -15,7 +15,9 @@ function create(\PDO $pdo) {
 	$pdo->exec('
 		create table user (
 			id integer not null primary key,
+			login text,
 			username text,
+			email text,
 			token text,
 			password text default null
 		)

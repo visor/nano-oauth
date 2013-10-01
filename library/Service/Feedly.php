@@ -31,7 +31,7 @@ class Feedly extends Service {
 	 *
 	 * @throws Exception
 	 */
-	public function getUserId($token) {
+	public function getUserData($token) {
 		throw new Exception('Not implemented yet');
 	}
 

@@ -4,6 +4,7 @@ namespace Module\Oauth\Service;
 
 use Module\Oauth\Service;
 use Module\Oauth\Scope;
+use Module\Oauth\UserData;
 use Nano\Exception;
 
 class Github extends Service {
@@ -56,16 +57,27 @@ class Github extends Service {
 	/**
 	 * Should return user unique id from oauth service
 	 *
-	 * @return string
+	 * @return \Module\Oauth\UserData
 	 * @param string $token token returned by {@see handleCallback}
 	 *
 	 * @throws \Nano\Exception
 	 */
-	public function getUserId($token) {
+	public function getUserData($token) {
 		$request = new \HttpRequest(self::USER_URL . '?access_token=' . $token);
 		$response = $request->send();
-		$result = json_decode($response->getBody());
-		return $result->id;
+		$user = json_decode($response->getBody());
+
+		$result = new UserData($user->id);
+		if (isSet($user->email)) {
+			$result->setEmail($user->email);
+		}
+		if (isSet($user->login)) {
+			$result->setNickName($user->login);
+		}
+		if (isSet($user->name)) {
+			$result->setUserName($user->name);
+		}
+		return $result;
 	}
 
 }

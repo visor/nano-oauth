@@ -4,17 +4,19 @@ namespace Module\Oauth\Service;
 
 use Module\Oauth\Service;
 use Module\Oauth\Scope;
+use Module\Oauth\UserData;
 use Nano\Exception;
 
 class Google extends Service {
 
 	const AUTHORIZE_URL    = 'https://accounts.google.com/o/oauth2/auth';
 	const ACCESS_TOKEN_URL = 'https://accounts.google.com/o/oauth2/token';
+	const USER_URL         = 'https://www.googleapis.com/oauth2/v3/userinfo';
 
 	protected static $scopes = array(
 		Scope::BASIC   => 'openid profile'
 		, Scope::USER  => 'openid profile'
-		, Scope::EMAIL => 'openid email'
+		, Scope::EMAIL => 'openid profile email'
 	);
 
 	public function getName() {
@@ -51,7 +53,7 @@ class Google extends Service {
 			throw new Exception($params->error);
 		}
 
-		return $params->id_token;
+		return $params->access_token;
 	}
 
 	/**
@@ -62,14 +64,22 @@ class Google extends Service {
 	 *
 	 * @throws \Nano\Exception
 	 */
-	public function getUserId($token) {
-		$segments = explode('.', $token);
-		if (3 !== count($segments)) {
-			throw new Exception('Invalid token');
+	public function getUserData($token) {
+		$request = new \HttpRequest(self::USER_URL . '?access_token=' . $token);
+		$response = $request->send();
+		$user = json_decode($response->getBody());
+
+		$result = new UserData($user->sub, isSet($user->email) ? $user->email : null);
+		if (isSet($user->name)) {
+			$result->setUserName($user->name);
+			$result->setNickName($user->name);
+		}
+		if (isSet($user->email)) {
+			$result->setEmail($user->email);
+			$result->setNickName($user->name);
 		}
 
-		$idToken = json_decode(base64_decode($segments[1]));
-		return $idToken->sub;
+		return $result;
 	}
 
 	protected function getRedirectUri() {
