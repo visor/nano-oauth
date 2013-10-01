@@ -2,8 +2,6 @@
 
 namespace Module\Oauth;
 
-use Module\Oauth\UserData;
-
 interface Mapper {
 
 	/**
