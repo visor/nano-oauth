@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Oauth\Controller;
+namespace App\Controller;
 
 use App\Model\UserOauth;
 use Nano\Controller;
